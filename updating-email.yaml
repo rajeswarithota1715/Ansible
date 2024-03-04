@@ -1,0 +1,16 @@
+- hosts: all
+  gather_facts: false  # don't try to ssh yet!!
+  vars:
+    ansible_ssh_user: tdems
+
+  tasks:
+    - name: "change the TDEMS DL from DL.NGUK.TDEMSSupport@nationalgrid.com to DL.ESO-LowerEnv.Support@nationalgrid.com"
+      replace:
+        path: /home/tdems/scripts/healthmonitor/health_monitor.sh
+        regexp:  'DL.NGUK.TDEMSSupport@nationalgrid.com'
+        replace: 'DL.ESO-LowerEnv.Support@nationalgrid.com'
+    - name: "removing tsravan.kumar@nationalgrid.com"
+      replace:
+        path: /home/tdems/scripts/healthmonitor/health_monitor.sh
+        regexp:  'tsravan.kumar@nationalgrid.com,'
+        replace: ''
