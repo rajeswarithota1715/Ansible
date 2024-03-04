@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+  ignore_errors: yes
+  tasks:
+    - name: Bluecoat connection test
+      raw: "timeout --signal=9 2 telnet zscaler.nationalgrid.com  80"
+      register: p80
+    - debug:
+        msg: "{{ p80.stdout }}"
+
