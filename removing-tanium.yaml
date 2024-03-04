@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  gather_facts: no
+  name: This playbook is to remove Tanium old file
+  tasks:
+    - name: remove the file
+      shell: rm -rf /home/tdems/TaniumClient-7.4.4.1362-1.oel7.x86_64.rpm
