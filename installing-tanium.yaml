@@ -1,0 +1,28 @@
+---
+- hosts: all
+  name: this play is to install tanimum
+  gather_facts: no
+  become: yes
+  become_user: root
+  tasks:
+    - name: copy the taium RPM file
+      copy:
+        src: 7.4.10.1054_oracle7-x64_TaniumClient-7.4.10.1054-1.oel7.x86_64.rpm
+        dest: /home/tdems/
+    - name: Install tanium client
+      yum:
+        name: /home/tdems/7.4.10.1054_oracle7-x64_TaniumClient-7.4.10.1054-1.oel7.x86_64.rpm
+        state: present
+    - name: copy tanium init file
+      copy:
+        src: tanium-init.dat
+        dest: /opt/Tanium/TaniumClient
+    - name: set the configuration
+      shell: /opt/Tanium/TaniumClient/TaniumClient config set ServerNameList \bil-tanos-001.na.ngrid.net,bil-tanos-002.na.ngrid.net,tsus2.nationalgrid.com,65.196.116.129,10.106.58.61,10.106.58.62
+    - name: start the taniumclient
+      service:
+         name: taniumclient
+         state: started
+      register: stus
+    - debug:
+        msg: "{{ stus.state }}"
