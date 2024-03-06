@@ -1,0 +1,15 @@
+- hosts: all
+  become: true
+  gather_facts: no
+  become_user: root
+  tasks:
+    - name: read a content
+      slurp:
+        src: /etc/yum.conf
+      register: output
+    - name: print
+      debug:
+       msg: >
+         {{
+           (output['content'] | b64decode).splitlines()
+         }}
